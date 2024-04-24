@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Student Management System</title>
+	<link rel="stylesheet"
+		  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+		  crossorigin="anonymous">
+
+	<style>
+		body {
+            background-color: lightgrey;
+        }
+
+        .main-container {
+            width: 80%;
+            margin: 20px auto; /* Added margin for top and bottom */
+            border: 5px solid grey;
+            padding-top: 25px;
+            background-color: white;
+        }
+
+        .student-list-h {
+            font-family: Tahoma, Arial, sans-serif;
+            font-size: 34px;
+            text-align: center;
+            color: #333;
+            padding: 10px 0;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .student-list {
+            font-family: Tahoma, Arial, sans-serif;
+            font-size: 14px; /* Increased font size for better readability */
+            text-align: center;
+            color: #333;
+        }
+
+        th {
+            font-size: 16px; /* Increased font size for table headings */
+        }
+
+        .btn-add-student {
+            margin-bottom: 20px; /* Added margin to the bottom of the "Add Student" button */
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9; /* Alternating row colors */
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center; /* Center align action buttons */
+        }
+
+        .action-buttons a {
+            margin: 0 5px; /* Added margin between action buttons */
+        }
+
+        .log-out {
+            text-align: left;
+        }
+	</style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	<!-- Brand -->
+	<a class="navbar-brand" href="#">Student Management System</a>
+
+	<!-- Toggler/collapsible Button -->
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<!-- Navbar links -->
+	<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link" th:href="@{/students}">Student Management</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" th:href="@{/students}">Teacher Management</a>
+			</li>
+		</ul>
+
+		<div class="navbar-nav ml-auto">
+			<a class="nav-item nav-link log-out" th:href="@{/login}">LogOut</a>
+		</div>
+	</div>
+</nav>
+
+<div class="main-container mt-5">
+	<div class="container">
+		<div class="row">
+			<h1 class="student-list-h"> Students List </h1>
+		</div>
+		<hr>
+
+		<div class="row">
+			<div class="col-lg-3">
+				<a th:href="@{/students/new}" class="btn btn-primary btn-sm mb-3 btn-add-student"> Add Student</a>
+			</div>
+		</div>
+		<table class="table table-striped table-bordered student-list">
+			<thead class="table-dark">
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Address</th>
+				<th>Phone Number</th>
+				<th>Date of Birth</th>
+				<th>Actions</th>
+			</tr>
+			</thead>
+
+			<tbody>
+			<tr th:each="student: ${students}">
+				<td th:text="${student.firstName}"></td>
+				<td th:text="${student.lastName}"></td>
+				<td th:text="${student.email}"></td>
+				<td th:text="${student.address}"></td>
+				<td th:text="${student.phoneNumber}"></td>
+				<td th:text="${student.dateOfBirth}"></td>
+
+				<td class="action-buttons">
+					<a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-primary btn-sm">Update</a>
+					<a th:href="@{/students/{id}(id=${student.id})}" class="btn btn-danger btn-sm">Delete</a>
+				</td>
+			</tr>
+			</tbody>
+
+		</table>
+
+	</div>
+</div>
+</body>
+</html>
